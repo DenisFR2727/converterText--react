@@ -42,7 +42,7 @@ function App() {
         showAlert={showAlert}
         mode={mode}
       />
-      <Alert attension={attension} />
+      {attension && <Alert attension={attension} />}
       <TextForm alertText={showAlert} mode={mode} />
     </div>
   );

@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import style from "./TextForm.module.scss";
+import { franc } from "franc-min";
 
 interface PropsType {
   alertText: (message: string, type: string) => void;
@@ -8,9 +9,15 @@ interface PropsType {
 
 function TextForm({ alertText, mode }: PropsType) {
   const [textArea, setTextArea] = useState<string>("");
+  const [language, setLanguage] = useState<string>("");
+
   const textAreaLength: boolean = textArea === "";
   const colorText: string = mode === "dark" ? "text-light" : "text-dark";
   const bgColorArea: string = mode === "dark" ? "rgb(65, 65, 107)" : "bg-light";
+
+  useEffect(() => {
+    setLanguage(franc(textArea));
+  }, [textArea]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
@@ -83,6 +90,10 @@ function TextForm({ alertText, mode }: PropsType) {
         >
           {textArea}
         </textarea>
+        <p className={colorText}>
+          Language:{" "}
+          {language.charAt(0).toUpperCase() + language.slice(1) || "Unknown"}
+        </p>
         <div className={style.buttons}>
           <div className="d-grid gap-3 d-md-flex">
             <button name="uppercase" className="btn btn-danger" type="submit">
